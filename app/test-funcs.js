@@ -1,5 +1,6 @@
 // Usage: put code to be tested in the baseline() and test() functions in this file.
-// speed-test will compare the time taken to run each function.
+// fitbit-speed-test will compare the time taken to run each function.
+
 // An argument is passed just in case a function needs to use it to avoid being optimised out of existence.
 // A value shoud be returned for the same reason.
 

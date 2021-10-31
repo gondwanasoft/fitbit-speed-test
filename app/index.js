@@ -5,7 +5,7 @@ import { baseline, test } from './test-funcs'
 
 let trials = 3, trialNbr = 1
 let count = 10
-let baselineDuration, testDuration, maxDuration, durationDiff
+let baselineDuration, testDuration, durationSum, durationDiff
 
 if (goals.calories === 360) {   // unforgivably kludgy way to detect simulator
   console.warn('This test is being run on the Fitbit simulator.')
@@ -36,15 +36,21 @@ function trial() {
   }, 2000)
 }
 
-// Determine count by doubling it until the duration required for one trial exceeds one second:
+// We want count to be as large as possible, so our results are statistically significant.
+// Determine count by doubling it until the duration required for one trial (ie, both test() and baseline()) exceeds 1 sec.
+// Why 1 sec? In the worst case, the first value of count that results in a duration > 1 sec could actually result in a duration of almost 2 sec.
+// Because we've been doubling the duration each iteration, we have a geometric series of durations. The sum of such a series is double the final value;
+// ie, up to almost 4 sec. Fitbit OS requires apps to not hog the CPU for more than 5 seconds, so we're safe. Just.
 console.log('Determining iteration count; wait...')
 do {
   baselineDuration = evaluate(baseline, count)
   testDuration = evaluate(test, count)
-  maxDuration = Math.max(baselineDuration, testDuration)
+  durationSum = baselineDuration + testDuration
   //console.log(`count=${count} maxD=${maxDuration}`)
   count <<= 1
-} while (maxDuration < 1000)
+} while (durationSum < 1000)
+
+count <<= 1   // it's safe to double count because future trials will only involve one evaluate() of each function
 
 console.log(`Testing: ${trials} trials of ${count} iterations; wait...`)
 
