@@ -7,4 +7,4 @@ Put code to be tested in the baseline() and test() functions in `test-funcs.js` 
 
 Build, install and run `fitbit-speed-test`.
 
-`fitbit-speed-test` will compare the time taken to run each function.
+`fitbit-speed-test` will compare the time taken to run each function. Output goes to the console. It will take about 10 seconds to finish.

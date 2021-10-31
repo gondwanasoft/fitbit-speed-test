@@ -50,8 +50,8 @@ do {
   count <<= 1
 } while (durationSum < 1000)
 
-count <<= 1   // it's safe to double count because future trials will only involve one evaluate() of each function
+//count <<= 1   // It SHOULD be safe to double count because future trials will only involve one evaluate() of each function, rather than a geometric series. But sometimes it isn't.
 
-console.log(`Testing: ${trials} trials of ${count} iterations; wait...`)
+console.log(`Testing: ${trials} trials of ${count} iterations each; wait...`)
 
 trial()
